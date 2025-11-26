@@ -13,13 +13,14 @@ interface Task {
 interface BacklogSectionProps {
   tasks: Task[]
   onAddTask?: () => void
+  onEditTask?: (task: Task) => void
 }
 
-const BacklogSection = ({ tasks, onAddTask }: BacklogSectionProps) => {
-  const handleTaskClick = (taskId: number) => {
-    // TODO: Open Task edit modal
-    console.log('Edit task:', taskId)
-  }
+const BacklogSection = ({
+  tasks,
+  onAddTask,
+  onEditTask,
+}: BacklogSectionProps) => {
 
   return (
     <div className="space-y-4">
@@ -42,7 +43,7 @@ const BacklogSection = ({ tasks, onAddTask }: BacklogSectionProps) => {
                 <TaskCard
                   key={task.id}
                   task={task}
-                  onClick={() => handleTaskClick(task.id)}
+                  onClick={() => onEditTask?.(task)}
                 />
               ))}
           </>

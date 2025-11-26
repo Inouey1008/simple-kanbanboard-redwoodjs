@@ -21,6 +21,8 @@ interface EpicSectionProps {
   tasks: Task[]
   onEdit?: () => void
   onDelete?: () => void
+  onAddTask?: (status: string) => void
+  onEditTask?: (task: Task) => void
 }
 
 const STATUSES = ['TODO', 'DOING', 'REVIEW', 'DONE']
@@ -31,7 +33,14 @@ const STATUS_LABELS = {
   DONE: 'Done',
 }
 
-const EpicSection = ({ epic, tasks, onEdit, onDelete }: EpicSectionProps) => {
+const EpicSection = ({
+  epic,
+  tasks,
+  onEdit,
+  onDelete,
+  onAddTask,
+  onEditTask,
+}: EpicSectionProps) => {
   // Group tasks by status
   const tasksByStatus = STATUSES.reduce((acc, status) => {
     acc[status] = tasks
@@ -39,11 +48,6 @@ const EpicSection = ({ epic, tasks, onEdit, onDelete }: EpicSectionProps) => {
       .sort((a, b) => a.order - b.order)
     return acc
   }, {} as Record<string, Task[]>)
-
-  const handleAddTask = (status: string) => {
-    // TODO: Open Task create modal with epic and status pre-selected
-    console.log('Add task to epic', epic.id, 'with status', status)
-  }
 
   return (
     <div className="space-y-4">
@@ -78,7 +82,8 @@ const EpicSection = ({ epic, tasks, onEdit, onDelete }: EpicSectionProps) => {
             status={status}
             label={STATUS_LABELS[status]}
             tasks={tasksByStatus[status]}
-            onAddTask={() => handleAddTask(status)}
+            onAddTask={() => onAddTask?.(status)}
+            onEditTask={onEditTask}
           />
         ))}
       </div>

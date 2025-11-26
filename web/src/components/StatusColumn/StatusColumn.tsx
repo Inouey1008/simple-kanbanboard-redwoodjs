@@ -15,13 +15,16 @@ interface StatusColumnProps {
   label: string
   tasks: Task[]
   onAddTask?: () => void
+  onEditTask?: (task: Task) => void
 }
 
-const StatusColumn = ({ status, label, tasks, onAddTask }: StatusColumnProps) => {
-  const handleTaskClick = (taskId: number) => {
-    // TODO: Open Task edit modal
-    console.log('Edit task:', taskId)
-  }
+const StatusColumn = ({
+  status,
+  label,
+  tasks,
+  onAddTask,
+  onEditTask,
+}: StatusColumnProps) => {
 
   return (
     <div className="space-y-2">
@@ -37,7 +40,7 @@ const StatusColumn = ({ status, label, tasks, onAddTask }: StatusColumnProps) =>
             <TaskCard
               key={task.id}
               task={task}
-              onClick={() => handleTaskClick(task.id)}
+              onClick={() => onEditTask?.(task)}
             />
           ))}
 
