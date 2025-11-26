@@ -9,8 +9,8 @@ export const schema = gql`
   }
 
   type Query {
-    epics: [Epic!]! @requireAuth
-    epic(id: Int!): Epic @requireAuth
+    epics: [Epic!]!
+    epic(id: Int!): Epic
   }
 
   input CreateEpicInput {
@@ -24,8 +24,8 @@ export const schema = gql`
   }
 
   type Mutation {
-    createEpic(input: CreateEpicInput!): Epic! @requireAuth
-    updateEpic(id: Int!, input: UpdateEpicInput!): Epic! @requireAuth
-    deleteEpic(id: Int!): Epic! @requireAuth
+    createEpic(input: CreateEpicInput!): Epic!
+    updateEpic(id: Int!, input: UpdateEpicInput!): Epic!
+    deleteEpic(id: Int!): Epic!
   }
 `

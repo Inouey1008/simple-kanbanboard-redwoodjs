@@ -35,6 +35,36 @@ export const deleteTask: MutationResolvers['deleteTask'] = ({ id }) => {
   })
 }
 
+// Custom queries for Kanban board
+export const tasksByEpic: QueryResolvers['tasksByEpic'] = ({ epicId }) => {
+  return db.task.findMany({
+    where: {
+      epicId: epicId,
+    },
+    orderBy: [
+      { status: 'asc' },
+      { order: 'asc' },
+    ],
+  })
+}
+
+// Custom mutations for drag & drop
+export const moveTask: MutationResolvers['moveTask'] = async ({
+  id,
+  status,
+  epicId,
+  order,
+}) => {
+  return db.task.update({
+    where: { id },
+    data: {
+      status,
+      epicId,
+      order,
+    },
+  })
+}
+
 export const Task: TaskRelationResolvers = {
   epic: (_obj, { root }) => {
     return db.task.findUnique({ where: { id: root?.id } }).epic()

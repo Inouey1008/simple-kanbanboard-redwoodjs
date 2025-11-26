@@ -13,17 +13,18 @@ export const schema = gql`
   }
 
   type Query {
-    tasks: [Task!]! @requireAuth
-    task(id: Int!): Task @requireAuth
+    tasks: [Task!]!
+    task(id: Int!): Task
+    tasksByEpic(epicId: Int): [Task!]!
   }
 
   input CreateTaskInput {
     title: String!
     description: String
     dueDate: DateTime
-    status: String!
+    status: String
     epicId: Int
-    order: Float!
+    order: Float
   }
 
   input UpdateTaskInput {
@@ -36,8 +37,9 @@ export const schema = gql`
   }
 
   type Mutation {
-    createTask(input: CreateTaskInput!): Task! @requireAuth
-    updateTask(id: Int!, input: UpdateTaskInput!): Task! @requireAuth
-    deleteTask(id: Int!): Task! @requireAuth
+    createTask(input: CreateTaskInput!): Task!
+    updateTask(id: Int!, input: UpdateTaskInput!): Task!
+    deleteTask(id: Int!): Task!
+    moveTask(id: Int!, status: String!, epicId: Int, order: Float!): Task!
   }
 `
