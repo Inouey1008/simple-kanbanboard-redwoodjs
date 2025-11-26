@@ -14,11 +14,29 @@ generator client {
   binaryTargets = "native"
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
-// TODO: Please remove the following example:
-model UserExample {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+// Kanban Board Models
+
+model Epic {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tasks       Task[]
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?
+  dueDate     DateTime?
+  status      String    @default("TODO")  // TODO, DOING, REVIEW, DONE
+  epicId      Int?      // null = Backlog
+  epic        Epic?     @relation(fields: [epicId], references: [id], onDelete: SetNull)
+  order       Float     @default(0)  // for ordering within status
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status])
+  @@index([epicId])
 }
