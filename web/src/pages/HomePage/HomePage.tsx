@@ -1,5 +1,6 @@
 import { Metadata } from '@redwoodjs/web'
 import { PlusIcon } from '@heroicons/react/24/outline'
+import KanbanBoard from 'src/components/KanbanBoard/KanbanBoard'
 
 const HomePage = () => {
   const handleCreateEpic = () => {
@@ -28,8 +29,7 @@ const HomePage = () => {
 
         {/* Main Content */}
         <main className="p-6">
-          {/* KanbanBoard will be added in Commit 2 */}
-          <div className="text-gray-500">Kanban Board coming soon...</div>
+          <KanbanBoard />
         </main>
       </div>
     </>

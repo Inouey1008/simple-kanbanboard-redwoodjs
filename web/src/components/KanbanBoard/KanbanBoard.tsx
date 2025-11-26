@@ -1,4 +1,6 @@
 import { useQuery } from '@redwoodjs/web'
+import EpicSection from 'src/components/EpicSection/EpicSection'
+import BacklogSection from 'src/components/BacklogSection/BacklogSection'
 
 const EPICS_QUERY = gql`
   query EpicsQuery {
@@ -42,44 +44,42 @@ const KanbanBoard = () => {
   // Separate tasks by epic and backlog
   const backlogTasks = tasks.filter((task) => task.epicId === null)
 
+  const handleEditEpic = (epicId: number) => {
+    // TODO: Open Epic edit modal
+    console.log('Edit epic:', epicId)
+  }
+
+  const handleDeleteEpic = (epicId: number) => {
+    // TODO: Confirm and delete epic
+    console.log('Delete epic:', epicId)
+  }
+
+  const handleAddTask = (epicId?: number, status?: string) => {
+    // TODO: Open Task create modal
+    console.log('Add task:', { epicId, status })
+  }
+
   return (
     <div className="space-y-8">
       {/* Epic Sections */}
-      {epics.map((epic) => (
-        <div key={epic.id} className="space-y-4">
-          {/* Epic Section will be a separate component */}
-          <div className="border-b border-gray-300 pb-2">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">
-                ▸ {epic.name}
-              </h2>
-              <div className="flex gap-2">
-                <button className="text-sm text-gray-600 hover:text-gray-900">
-                  編集
-                </button>
-                <button className="text-sm text-gray-600 hover:text-gray-900">
-                  ×
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Status Row - will be implemented next */}
-          <div className="text-gray-400 text-sm">Status columns coming soon...</div>
-        </div>
-      ))}
+      {epics.map((epic) => {
+        const epicTasks = tasks.filter((task) => task.epicId === epic.id)
+        return (
+          <EpicSection
+            key={epic.id}
+            epic={epic}
+            tasks={epicTasks}
+            onEdit={() => handleEditEpic(epic.id)}
+            onDelete={() => handleDeleteEpic(epic.id)}
+          />
+        )
+      })}
 
       {/* Backlog Section */}
-      <div className="space-y-4">
-        <div className="border-b border-gray-300 pb-2">
-          <h2 className="text-lg font-semibold text-gray-900">▸ Backlog</h2>
-        </div>
-
-        {/* Backlog tasks - will be implemented next */}
-        <div className="text-gray-400 text-sm">
-          {backlogTasks.length} tasks in backlog
-        </div>
-      </div>
+      <BacklogSection
+        tasks={backlogTasks}
+        onAddTask={() => handleAddTask()}
+      />
     </div>
   )
 }

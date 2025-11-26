@@ -1,3 +1,5 @@
+import TaskCard from 'src/components/TaskCard/TaskCard'
+
 interface Task {
   id: number
   title: string
@@ -16,6 +18,11 @@ interface StatusColumnProps {
 }
 
 const StatusColumn = ({ status, label, tasks, onAddTask }: StatusColumnProps) => {
+  const handleTaskClick = (taskId: number) => {
+    // TODO: Open Task edit modal
+    console.log('Edit task:', taskId)
+  }
+
   return (
     <div className="space-y-2">
       <div className="rounded border border-gray-200 bg-gray-50 p-3">
@@ -27,20 +34,11 @@ const StatusColumn = ({ status, label, tasks, onAddTask }: StatusColumnProps) =>
         {/* Task Cards */}
         <div className="space-y-2">
           {tasks.map((task) => (
-            <div
+            <TaskCard
               key={task.id}
-              className="cursor-pointer rounded border border-gray-200 bg-white p-3 hover:border-gray-300"
-            >
-              {/* Task Card component will be added in Commit 3 */}
-              <div className="text-sm font-medium text-gray-900">
-                {task.title}
-              </div>
-              {task.dueDate && (
-                <div className="mt-1 text-xs text-gray-500">
-                  {new Date(task.dueDate).toLocaleDateString('ja-JP')}
-                </div>
-              )}
-            </div>
+              task={task}
+              onClick={() => handleTaskClick(task.id)}
+            />
           ))}
 
           {/* Add Task Button */}
