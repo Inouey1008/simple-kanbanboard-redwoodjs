@@ -11,9 +11,15 @@
     ]
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^2.2.0",
     "@redwoodjs/forms": "8.9.0",
     "@redwoodjs/router": "8.9.0",
     "@redwoodjs/web": "8.9.0",
+    "date-fns": "^4.1.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
