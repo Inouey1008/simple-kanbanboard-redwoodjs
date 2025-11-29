@@ -1,4 +1,6 @@
 import { format } from 'date-fns'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 interface Task {
   id: number
@@ -16,16 +18,35 @@ interface TaskCardProps {
 }
 
 const TaskCard = ({ task, onClick }: TaskCardProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: task.id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  }
+
   const isOverdue =
     task.dueDate && new Date(task.dueDate) < new Date(new Date().setHours(0, 0, 0, 0))
 
   return (
     <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
       onClick={onClick}
       className={`
-        cursor-pointer rounded border bg-white p-3 transition-colors
+        cursor-grab rounded border bg-white p-3 transition-colors active:cursor-grabbing
         ${isOverdue ? 'border-red-300 bg-red-50' : 'border-gray-200'}
-        hover:border-gray-300 hover:shadow-sm
+        ${isDragging ? 'shadow-lg' : 'hover:border-gray-300 hover:shadow-sm'}
       `}
     >
       {/* Task Title */}

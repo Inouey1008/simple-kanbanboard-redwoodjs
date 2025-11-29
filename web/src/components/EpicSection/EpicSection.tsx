@@ -82,6 +82,7 @@ const EpicSection = ({
             status={status}
             label={STATUS_LABELS[status]}
             tasks={tasksByStatus[status]}
+            epicId={epic.id}
             onAddTask={() => onAddTask?.(status)}
             onEditTask={onEditTask}
           />
