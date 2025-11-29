@@ -6,7 +6,6 @@
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -30,10 +29,10 @@ model Task {
   title       String
   description String?
   dueDate     DateTime?
-  status      String    @default("TODO")  // TODO, DOING, REVIEW, DONE
-  epicId      Int?      // null = Backlog
+  status      String    @default("TODO") // TODO, DOING, REVIEW, DONE
+  epicId      Int? // null = Backlog
   epic        Epic?     @relation(fields: [epicId], references: [id], onDelete: SetNull)
-  order       Float     @default(0)  // for ordering within status
+  order       Float     @default(0) // for ordering within status
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
